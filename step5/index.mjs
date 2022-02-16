@@ -11,7 +11,7 @@ console.log(`Having creator create testing NFT`);
 const theNFT = await stdlib.launchToken(accCreator, "bumple", "NFT", { supply: 1 });
 const nftId = theNFT.id;
 const minBid = stdlib.parseCurrency(2);
-const lenInBlocks = 10;
+const lenInBlocks = 5;
 const params = { nftId, minBid, lenInBlocks };
 
 let done = false;
@@ -31,12 +31,12 @@ const startBidders = async () => {
 
         console.log(`${who} decides to bid ${stdlib.formatCurrency(bid)}.`);
         console.log(`${who} balance before is ${await getBal()}`);
-        try {
-            const [ lastBidder, lastBid ] = await ctc.apis.Bidder.bid(bid);
-            console.log(`${who} out bid ${lastBidder} who bid ${stdlib.formatCurrency(lastBid)}.`);
-        } catch (e) {
-            console.log(`${who} failed to bid, because the auction is over`);
-        }
+
+        const [ lastBidder, lastBid ] = await ctc.apis.Bidder.bid(bid);
+        console.log(`${who} out bid ${lastBidder} who bid ${stdlib.formatCurrency(lastBid)}.`);
+
+        console.log(`${who} failed to bid, because the auction is over`);
+
         console.log(`${who} balance after is ${await getBal()}`);
     };
 
